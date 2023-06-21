@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :items,only: [:index, :show]
     resources :cart_items,only: [:index, :create, :update, :destroy]
     delete 'cart_items/destroy_all'
-    # ↓resources :customers,only: [:edit, :show, :update]
+    # resources :customers, only: [:edit, :show, :update]
     get 'customers/my_page' => 'customers#show'
     get 'customers/my_page/edit' => 'customers#edit'
     patch 'customers/my_page' => 'customers#update'
