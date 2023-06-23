@@ -23,12 +23,12 @@ class Public::CustomersController < ApplicationController
 
   def withdraw
     @customer = current_customer
-    redirect_to destroy_admin_session_path, method: :delete
     @customer.update(is_deleted: true)
+    redirect_to customers_my_page_path
   end
 
   def customer_params
     params.require(:customer).permit(:last_name, :first_name, :last_name_kana,
-    :first_name_kana, :postal_code, :address, :telephone_number)
+    :first_name_kana, :postal_code, :address, :telephone_number, :is_deleted)
   end
 end

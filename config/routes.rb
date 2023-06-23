@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :items, only: [:index, :create, :new, :edit, :show, :update]
     resources :coustomers,only: [:index, :edit, :show, :update]
     resources :orders,only: [:show]
+    resources :genres,only: [:index, :create, :edit, :update]
   end
 
   # 顧客用ログイン
