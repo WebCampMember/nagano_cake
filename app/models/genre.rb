@@ -1,3 +1,3 @@
 class Genre < ApplicationRecord
-  has_many :items, dependent: :update
+  has_many :items
 end

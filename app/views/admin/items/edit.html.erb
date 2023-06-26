@@ -1,2 +1,30 @@
 <h1>商品編集</h1>
-<p>update:商品情報の更新</p>
+  <%= form_with model: @item, url: admin_item_path(@item) do |f| %>
+  <table>
+    <tbody>
+      <tr>
+        <th><label>商品画像</label></th>
+        <th><%= f.file_field :image, accept: "image/*"  %></th>
+      </tr>
+      <tr>
+        <th><label for="inputName">商品名</label></th>
+        <th><%= f.text_field :name, autofocus: true, id:"inputName", placeholder:"商品名を入力" %></th>
+      </tr>
+      <tr>
+        <th><label>商品説明</label></th>
+        <th><%= f.text_area :introduction %></th>
+      </tr>
+      <tr>
+        <th><label>ジャンル名</label></th>
+        <th><%= f.select :genre_id, options_from_collection_for_select(Genre.all, :id, :genre_name) %></th>
+      </tr>
+      <tr>
+        <th><label for="inputPrice">税抜価格</label></th>
+        <th><%= f.text_field :price, autofocus: true, id:"inputPrice", placeholder:"金額を入力"%></th>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <%= f.submit "編集内容を保存", class:"btn btn-secondary" %>
+  </div>
+  <% end %>

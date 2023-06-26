@@ -1,1 +1,26 @@
 <h1>商品詳細</h1>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th><%= image_tag @item.get_image(100,100) %></th>
+      </tr>
+      <tr>
+        <th>商品名</th>
+        <th><%= @item.name %></th>
+      </tr>
+      <tr>
+        <th>商品説明</th>
+        <th><%= @item.introduction %></th>
+      </tr>
+      <tr>
+        <th>ジャンル</th>
+        <th><%= @genre.genre_name %></th>
+      </tr>
+      <tr>
+        <th>税込み価格</br>
+        (税抜き価格)</th>
+        <th><%= @item.price %></th>
+      </tr>
+    </tbody>
+  </table>
+<h2><%= link_to "編集する",edit_admin_item_path, class:"btn btn-sm btn-success" %></h2>
