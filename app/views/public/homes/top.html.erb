@@ -1,5 +1,18 @@
-<h1>Homes#top</h1>
 <p>ようこそ、ながのCAKEへ！</p>
 <p>このサイトは、ケーキ販売のECサイトになります。</p>
 <p>会員でない方も商品の閲覧はできますが、</p>
 <p>購入には会員登録が必要になります。</p>
+
+<h1>新着商品</h1>
+<% @recent_items.each do |item| %>
+  <div class="item-box">
+    <%= image_tag item.image, size: "100x100" %>
+  </div>
+  <div class="item-name">
+    <%= link_to item.name, item_path(item.id) %>
+  </div>
+  <div class="item-price">
+    ¥ <%= item.price %>
+  </div>
+<% end %>
+<%= link_to '全ての商品を見る >', items_path %>

@@ -1,1 +1,14 @@
 <h1>商品一覧</h1>
+<div class="item-wrap">
+  <% @items.each do |item| %>
+    <div class="item-box">
+      <%= image_tag item.image, size: "100x100" %>
+    </div>
+    <div class="item-name">
+      <%= link_to item.name, item_path(item.id) %>
+    </div>
+    <div class="item-price">
+      ¥ <%= item.price %>
+    </div>
+  <% end %>
+</div>

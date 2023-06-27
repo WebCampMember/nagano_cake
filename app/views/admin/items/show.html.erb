@@ -17,9 +17,16 @@
         <th><%= @genre.genre_name %></th>
       </tr>
       <tr>
-        <th>税込み価格</br>
-        (税抜き価格)</th>
-        <th><%= @item.price %></th>
+        <th>
+          税込み価格</br>
+          (税抜き価格)
+        </th>
+        <th>
+          <% calculated_price = @item.price * 1.1 %>
+          <% rounded_price = calculated_price.ceil %>
+          <%= number_to_currency(rounded_price, unit: '¥', precision: 0) %>
+          (<%= number_to_currency(@item.price, unit: '¥',precision: 0) %>)
+        </th>
       </tr>
     </tbody>
   </table>

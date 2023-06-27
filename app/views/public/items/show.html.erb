@@ -1,1 +1,16 @@
 <h1>商品詳細</h1>
+  <div>
+    <%= image_tag @item.get_image(100,100) %>
+  </div>
+  <div>
+    <%= @item.name %>
+  </div>
+  <div>
+    <%= @item.introduction %>
+  </div>
+  <div>
+    <% calculated_price = @item.price * 1.1 %>
+    <% rounded_price = calculated_price.ceil %>
+    <%= number_to_currency(rounded_price, unit: '¥', precision: 0) %> 
+  </div>
+  
