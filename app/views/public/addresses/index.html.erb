@@ -1,0 +1,44 @@
+<h1>配送先登録/一覧</h1>
+<%= form_with model: @address, url: addresses_path, method: :post do |f| %>
+  <table>
+    <tbody>
+      <tr>
+        <th><label for="inputPostalCode">郵便番号(ハイフンなし)</label></th>
+        <th><%= f.text_field :postal_code, autofocus: true, id:"PostalCode", placeholder:"0000000" %></th>
+      </tr>
+      <tr>
+        <th><label for="inputAddress">住所</label></th>
+        <th><%= f.text_field :address, autofocus: true, id:"inputName", placeholder:"東京都渋谷区代々木神園町0-0" %></th>
+      </tr>
+      <tr>
+        <th><label for="inputName">宛名</label></th>
+        <th><%= f.text_field :address_name, autofocus: true, id:"inputName", placeholder:"令和道子" %></th>
+      </tr>
+    </tbody>
+  </table>
+  <%= f.submit '新規登録' %>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>郵便番号</th>
+      <th>住所</th>
+      <th>宛名</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @addresses.each do |address| %>
+    <tr>
+      <td><%= address.postal_code %></td>
+      <td><%= address.address %></td>
+      <td><%= address.address_name %></td>
+      <td>
+        <%= link_to "編集する",edit_address_path(address.id), class:"btn btn-sm btn-success" %>
+        <%= link_to "削除する",address_path(address.id), class:"btn btn-sm btn-danger", method: :delete, "data-confirm" => "本当に削除しますか？" %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

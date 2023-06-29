@@ -15,12 +15,13 @@ Rails.application.routes.draw do
     resources :orders,only: [:index, :create, :new, :show]
     get 'orders/thanx' => 'orders#thanx'
     post 'orders/confirm' => 'orders#confirm'
+    resources :addresses,only: [:index, :create, :edit, :update, :destroy]
   end
 
 # 管理者側のルーティング設定
   namespace :admin do
     root to: 'homes#top'
-    resources :items, only: [:index, :create, :new, :edit, :show, :update]
+    resources :items,only: [:index, :create, :new, :edit, :show, :update]
     resources :customers,only: [:index, :edit, :show, :update]
     resources :orders,only: [:show]
     resources :genres,only: [:index, :create, :edit, :update]
