@@ -18,15 +18,10 @@
       </tr>
       <tr>
         <th>
-          税込み価格</br>
-          (税抜き価格)
+          税込価格</br>
+          (税抜価格)
         </th>
-        <th>
-          <% calculated_price = @item.price * 1.1 %>
-          <% rounded_price = calculated_price.ceil %>
-          <%= number_to_currency(rounded_price, unit: '¥', precision: 0) %>
-          (<%= number_to_currency(@item.price, unit: '¥',precision: 0) %>)
-        </th>
+        <td><%= @item.with_tax_price.floor %>(<%= @item.price %>)円</td>
       </tr>
     </tbody>
   </table>

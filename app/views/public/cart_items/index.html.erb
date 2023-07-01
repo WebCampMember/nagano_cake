@@ -1,5 +1,34 @@
-<h1>カート内商品一覧画面(数量変更・カート削除の要素を含む)</h1>
-<p>update     :カート内商品データ更新</p>
-<p>destroy    :カート内商品データ削除(一商品)</p>
-<p>destroy_all:カート内商品データ削除(全て)</p>
-<p>create     :カート内商品データ追加</p>
+<h1>ショッピングカート</h1>
+<div><%= link_to "カートを空にする", destroy_all_cart_items_path, method: :delete %></div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>商品名</th>
+      <th>単価(税込)</th>
+      <th>数量</th>
+      <th>小計</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @cart_items.each do |cart_item| %>
+    <tr>
+      <th><%= cart_item.item.name %></th>
+      <td><%= cart_item.item.with_tax_price %> 円</td>
+      <td>
+        <%= form_with model: cart_item, url: cart_item_path(cart_item) do |f| %>
+          <%= f.select :amount, options_for_select(*[1..100], cart_item.amount) %>
+          <%= f.submit "変更", method: :patch %>
+        <% end %>
+      </td>
+      <td><%= cart_item.subtotal%> 円</td>
+      <% @total_amount += cart_item.subtotal %>
+      <th><%= link_to "削除する", cart_item_path(cart_item.id), class:"btn btn-sm btn-danger", method: :delete %></th>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p>合計金額: <%= @total_amount %> 円</p>
+<div><%= link_to "買い物を続ける", items_path %></div>
+<div><%= link_to "情報入力に進む", new_order_path %></div>

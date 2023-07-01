@@ -4,17 +4,23 @@ Rails.application.routes.draw do
     root to: "homes#top"
     get 'homes/about' => 'homes#about', as: 'about'
     resources :items,only: [:index, :show]
-    resources :cart_items,only: [:index, :create, :update, :destroy]
-    delete 'cart_items/destroy_all'
-    # resources :customers, only: [:edit, :show, :update]
+    resources :cart_items, only: [:index, :create, :update, :destroy] do
+      collection do
+        delete 'destroy_all'
+      end
+    end
     get 'customers/my_page' => 'customers#show'
     get 'customers/my_page/edit' => 'customers#edit'
     patch 'customers/my_page' => 'customers#update'
     get 'customers/my_page/confirm_withdraw' => 'customers#confirm_withdraw'
     patch 'customers/my_page/withdraw' => 'customers#withdraw'
-    resources :orders,only: [:index, :create, :new, :show]
-    get 'orders/thanx' => 'orders#thanx'
-    post 'orders/confirm' => 'orders#confirm'
+    resources :orders,only: [:index, :create, :new, :show] do
+      collection do
+        get 'thanx'
+        post 'confirm'
+      end
+    end
+
     resources :addresses,only: [:index, :create, :edit, :update, :destroy]
   end
 

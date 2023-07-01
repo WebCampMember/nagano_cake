@@ -9,8 +9,16 @@
     <%= @item.introduction %>
   </div>
   <div>
-    <% calculated_price = @item.price * 1.1 %>
-    <% rounded_price = calculated_price.ceil %>
-    <%= number_to_currency(rounded_price, unit: '¥', precision: 0) %> 
+    ¥<%= @item.with_tax_price.floor %>(税込)
   </div>
-  
+
+<!--ログインしている場合-->
+  <% if current_customer %>
+    <%= form_with model: @cart_item, url: cart_items_path, method: :post do |f| %>
+    <div>
+      <%= f.hidden_field :item_id, :value => @item.id %>
+      <%= f.select :amount, *[1..10], placeholder:"個数選択" %>
+    </div>
+    <%= f.submit 'カートに入れる', class:"btn btn-secondary" %>
+    <% end %>
+  <% end %>
