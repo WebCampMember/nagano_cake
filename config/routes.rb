@@ -16,8 +16,8 @@ Rails.application.routes.draw do
     patch 'customers/my_page/withdraw' => 'customers#withdraw'
     resources :orders,only: [:index, :create, :new, :show] do
       collection do
-        get 'thanx'
         post 'confirm'
+        get 'thanx'
       end
     end
 
