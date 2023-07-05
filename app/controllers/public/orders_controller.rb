@@ -4,22 +4,26 @@ class Public::OrdersController < ApplicationController
   end
 
   def confirm
-    select_address = params[:order][:select_address]
+    @total_amount = 0 #合計金額用の変数
+    @postage = 800 #送料800円の変数
+    @pay_money = 0 #支払金額用の変数
+    @cart_items = current_customer.cart_items.all #カート内アイテムの表示用変数
+    select_address = params[:order][:select_address] #ラジオボタン選択番号を検索
     if select_address == "0"
-      # ログインユーザーの住所
+      # (「0」番の場合)ログインユーザーの住所
       @order = Order.new(order_params)
       @order.postal_code = current_customer.postal_code
       @order.address = current_customer.address
       @order.address_name = current_customer.last_name + current_customer.first_name
     elsif select_address == "1"
-      # 登録済み住所
+      # (「1」番の場合)登録済み住所
       @order = Order.new(order_params)
       @address = Address.find(params[:order][:address_id])
       @order.postal_code = @address.postal_code
       @order.address = @address.address
       @order.address_name = @address.address_name
     elsif select_address == "2"
-      # 新しい住所
+      # (「2」番の場合)新しい住所
       @order = Order.new(order_params)
     else
       render :new
@@ -27,11 +31,15 @@ class Public::OrdersController < ApplicationController
   end
 
   def create
-
+    order = Order.new(order_params)
+    order.customer_id = current_customer.id
+    order.postage = params[:order][:postage]
+    order.pay_money= params[:order][:pay_money]
+    order.save
+    redirect_to thanx_orders_path
   end
 
   def thanx
-
   end
 
   def index
@@ -44,6 +52,10 @@ class Public::OrdersController < ApplicationController
 
   private
 
+  def order_params
+    params.require(:order).permit(:pay_method, :postal_code, :address, :address_name)
+  end
+  
   def order_params
     params.require(:order).permit(:pay_method, :postal_code, :address, :address_name)
   end
