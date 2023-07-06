@@ -4,10 +4,16 @@ class Public::OrdersController < ApplicationController
   end
 
   def confirm
-    @total_amount = 0 #合計金額用の変数
-    @postage = 800 #送料800円の変数
-    @pay_money = 0 #支払金額用の変数
     @cart_items = current_customer.cart_items.all #カート内アイテムの表示用変数
+
+    total = 0 #合計金額用の変数
+    @cart_items.each do |cart_items|
+      total += cart_items.subtotal
+    end
+
+    @total_amount = total #合計金額用の変数
+    @postage = 800 #送料800円の変数
+    @pay_money = @total_amount + @postage #支払金額用の変数
     select_address = params[:order][:select_address] #ラジオボタン選択番号を検索
     if select_address == "0"
       # (「0」番の場合)ログインユーザーの住所
@@ -33,9 +39,14 @@ class Public::OrdersController < ApplicationController
   def create
     order = Order.new(order_params)
     order.customer_id = current_customer.id
-    order.postage = params[:order][:postage]
-    order.pay_money= params[:order][:pay_money]
+    order.postage = params[:order][:postage].to_i
+    order.pay_money= params[:order][:pay_money].to_i
     order.save
+
+    @order_detail = OrderDetail.new(order_detail_params)
+    @order = Order.find(params[:order_detail][:order_id])
+    @order_detail.order_id = @order.id
+    # kokokarasaikai
     redirect_to thanx_orders_path
   end
 
@@ -53,10 +64,10 @@ class Public::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:pay_method, :postal_code, :address, :address_name)
+    params.require(:order).permit(:pay_method, :postal_code, :address, :address_name, :postage, :pay_money)
   end
-  
-  def order_params
-    params.require(:order).permit(:pay_method, :postal_code, :address, :address_name)
+
+  def order_detail_params
+    params.require(:order_detail).permit(:order_id, :item_id, :price, :amount)
   end
 end

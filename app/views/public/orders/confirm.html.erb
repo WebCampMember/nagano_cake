@@ -15,7 +15,6 @@
           <td><%= cart_item.item.with_tax_price %> 円</td>
           <td><%= cart_item.amount %></td>
           <td><%= cart_item.subtotal%> 円</td>
-          <% @total_amount += cart_item.subtotal %>
         </tr>
         <% end %>
       </tbody>
@@ -30,7 +29,7 @@
         </tr>
         <tr>
           <th>請求金額</th>
-          <th><%= @pay_money += @total_amount + @postage %>円</th>
+          <th><%= @pay_money %>円</th>
         </tr>
       </tbody>
     </table>
