@@ -5,12 +5,10 @@ class Public::OrdersController < ApplicationController
 
   def confirm
     @cart_items = current_customer.cart_items.all #カート内アイテムの表示用変数
-
     total = 0 #合計金額用の変数
     @cart_items.each do |cart_items|
       total += cart_items.subtotal
     end
-
     @total_amount = total #合計金額用の変数
     @postage = 800 #送料800円の変数
     @pay_money = @total_amount + @postage #支払金額用の変数
@@ -37,16 +35,23 @@ class Public::OrdersController < ApplicationController
   end
 
   def create
+    # 注文(Order)モデルに注文を保存
     order = Order.new(order_params)
     order.customer_id = current_customer.id
-    order.postage = params[:order][:postage].to_i
-    order.pay_money= params[:order][:pay_money].to_i
     order.save
-
-    @order_detail = OrderDetail.new(order_detail_params)
-    @order = Order.find(params[:order_detail][:order_id])
-    @order_detail.order_id = @order.id
-    # kokokarasaikai
+    # 注文詳細(OrderDetail)モデルにカート内商品の情報をもとに保存
+    @cart_items = current_customer.cart_items
+    @cart_items.each do |cart_item|
+      order_detail = OrderDetail.new
+      order_detail.order_id = order.id
+      order_detail.item_id = cart_item.item_id
+      order_detail.price = cart_item.item.with_tax_price
+      order_detail.amount = cart_item.amount
+      order_detail.save
+    end
+    # カート内商品を全て削除
+    current_customer.cart_items.destroy_all
+    # 注文完了画面に遷移
     redirect_to thanx_orders_path
   end
 
@@ -54,20 +59,17 @@ class Public::OrdersController < ApplicationController
   end
 
   def index
-
+    @orders = current_customer.orders.all
   end
 
   def show
-
+    @order = Order.find(params[:id])
+    @order_details = @order.order_details
   end
 
   private
 
   def order_params
     params.require(:order).permit(:pay_method, :postal_code, :address, :address_name, :postage, :pay_money)
-  end
-
-  def order_detail_params
-    params.require(:order_detail).permit(:order_id, :item_id, :price, :amount)
   end
 end

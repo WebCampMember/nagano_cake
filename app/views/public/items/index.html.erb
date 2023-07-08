@@ -8,7 +8,7 @@
       <%= link_to item.name, item_path(item.id) %>
     </div>
     <div class="item-price">
-      ¥ <%= item.price %>
+      ¥ <%= number_with_delimiter(item.price, delimiter: ',') %>
     </div>
   <% end %>
 </div>

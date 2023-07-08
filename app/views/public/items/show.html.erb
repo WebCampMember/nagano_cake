@@ -9,7 +9,7 @@
     <%= @item.introduction %>
   </div>
   <div>
-    ¥<%= @item.with_tax_price.floor %>(税込)
+    ¥<%= number_with_delimiter(@item.with_tax_price.floor, delimiter: ',') %>(税込)
   </div>
 
 <!--ログインしている場合-->
