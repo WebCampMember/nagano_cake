@@ -1,18 +1,28 @@
-<p>ようこそ、ながのCAKEへ！</p>
-<p>このサイトは、ケーキ販売のECサイトになります。</p>
-<p>会員でない方も商品の閲覧はできますが、</p>
-<p>購入には会員登録が必要になります。</p>
-
-<h1>新着商品</h1>
-<% @recent_items.each do |item| %>
-  <div class="item-box">
-    <%= image_tag item.image, size: "100x100" %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3" style="background-color: orange;">
+      <h2><%= link_to '管理者ログイン', new_admin_session_path %></h2>
+    </div>
+    <div class="col-lg-9">
+      <div class="text-center">
+        <p>ようこそ、ながのCAKEへ！</p>
+        <p>このサイトは、ケーキ販売のECサイトになります。</p>
+        <p>会員でない方も商品の閲覧はできますが、</p>
+        <p>購入には会員登録が必要になります。</p>
+      </div>
+      <h1>新着商品</h1>
+      <div class="row justify-content-center">
+        <% @recent_items.each do |item| %>
+        <div class="one-index">
+          <%= image_tag item.image, size: "200x150" %>
+          <p><%= link_to item.name, item_path(item.id) %></p>
+          <p>¥ <%= item.price %></p>
+        </div>
+        <% end %>
+      </div>
+      <div class="text-light">
+    <p><%= link_to '全ての商品を見る >', items_path %></p>
+    </div>
+    </div>
   </div>
-  <div class="item-name">
-    <%= link_to item.name, item_path(item.id) %>
-  </div>
-  <div class="item-price">
-    ¥ <%= item.price %>
-  </div>
-<% end %>
-<%= link_to '全ての商品を見る >', items_path %>
+</div>

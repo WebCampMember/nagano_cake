@@ -1,8 +1,9 @@
-<h2>新規会員登録</h2>
-
 <%= form_with model: @customer, url: customer_registration_path do |f| %>
   <%= render "public/shared/error_messages", resource: resource %>
-
+  <div class="container">
+    <div class="card-container">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4 mt-1">新規会員登録</h3>
 <table>
   <tbody>
     <tr>
@@ -105,7 +106,7 @@
       <th></th>
       <th>
       <div class="actions">
-        <%= f.submit "新規登録" %>
+        <%= f.submit "新規登録", class: "btn btn-success btn-block" %>
       </div>
       </th>
     </tr>

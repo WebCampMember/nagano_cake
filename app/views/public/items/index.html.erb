@@ -1,15 +1,22 @@
-<h1>商品一覧</h1>
-<div class="item-wrap">
-  <% @items.each do |item| %>
-    <div class="item-box">
-      <%= image_tag item.image, size: "100x100" %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3" style="background-color: orange;">
+      <P>ジャンル検索</P>
     </div>
-    <div class="item-name">
-      <%= link_to item.name, item_path(item.id) %>
+    <div class="col-lg-9">
+      <h1><strong>商品一覧</strong>(全<%= @items.count %>件)</h1>
+      <div class="row justify-content-center">
+        <% @items.each do |item| %>
+          <div class="item-box">
+            <%= image_tag item.image, size: "150x100" %>
+            <p><%= link_to item.name, item_path(item.id) %></p>
+            <p>¥ <%= number_with_delimiter(item.price, delimiter: ',') %></p>
+          </div>
+        <% end %>
+      </div>
+      <div class="row justify-content-center">
+        <%= paginate @items %>
+      </div>
     </div>
-    <div class="item-price">
-      ¥ <%= number_with_delimiter(item.price, delimiter: ',') %>
-    </div>
-  <% end %>
+  </div>
 </div>
-<%= paginate @items %>
