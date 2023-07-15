@@ -1,20 +1,20 @@
 <div class="container">
-  <div class="row">
-    <div class="col-lg-3" style="background-color: orange;">
-      <P>ジャンル検索</P>
+  <div class="row p-5">
+    <div class="col-3 bg-secondary text-white">
+      <p class="text-center">ジャンル検索</p>
     </div>
-    <div class="col-lg-9">
-      <h1><strong>商品一覧</strong>(全<%= @items.count %>件)</h1>
-      <div class="row justify-content-center">
+    <div class="col-9">
+      <h2 class="font-weight-bold">商品一覧(全<%= @count.count %>件)</h2>
+      <div class="row d-flex justify-content-center">
         <% @items.each do |item| %>
           <div class="item-box">
-            <%= image_tag item.image, size: "150x100" %>
+            <%= image_tag item.image, size: "180x125" %>
             <p><%= link_to item.name, item_path(item.id) %></p>
             <p>¥ <%= number_with_delimiter(item.price, delimiter: ',') %></p>
           </div>
         <% end %>
       </div>
-      <div class="row justify-content-center">
+      <div class="row d-flex justify-content-center" >
         <%= paginate @items %>
       </div>
     </div>

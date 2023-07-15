@@ -13,7 +13,3 @@
  *= require_tree .
  *= require_self
  */
-
-.one-btn {
-  margin: 15px 30px;
-}
