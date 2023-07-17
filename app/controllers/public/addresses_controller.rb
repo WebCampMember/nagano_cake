@@ -5,9 +5,9 @@ class Public::AddressesController < ApplicationController
   end
 
   def create
-    @address = Address.new(address_params)
-    @address.customer_id = current_customer.id
-    if @address.save
+    address = Address.new(address_params)
+    address.customer_id = current_customer.id
+    if address.save
       redirect_to addresses_path
     else
       redirect_to customers_my_page_path

@@ -1,9 +1,9 @@
-<h1>注文詳細画面</h1>
+<h1>注文履歴詳細</h1>
 <table class="table">
   <tbody>
     <tr>
       <th>購入者</th>
-      <th><%= link_to @order.address_name, admin_customer_path(@order.customer_id), class:"btn btn-sm btn-success" %></th>
+      <th><%= link_to @order.address_name, admin_customer_path(@order.customer_id) %></th>
     </tr>
     <tr>
       <th>注文日</th>
