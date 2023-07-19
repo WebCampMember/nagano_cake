@@ -1,8 +1,8 @@
 <div class="container p-4">
   <h3 class="font-weight-bold ml-5">ジャンル編集</h3>
-  <div class="row m-3">
+  <div class="row m-2">
     <%= form_with model: @genre, url: admin_genre_path(@genre) do |f| %>
-    <table>
+    <table class="table table-borderless">
       <tbody>
         <tr>
           <th><p class="font-weight-bold">ジャンル名　</p></th>

@@ -1,63 +1,74 @@
-<h1>注文履歴詳細</h1>
-<table class="table">
-  <tbody>
-    <tr>
-      <th>購入者</th>
-      <th><%= link_to @order.address_name, admin_customer_path(@order.customer_id) %></th>
-    </tr>
-    <tr>
-      <th>注文日</th>
-      <th><%= @order.created_at.strftime('%Y/%m/%d') %></th>
-    </tr>
-    <tr>
-      <th>配送先</th>
-      <th><%= @order.address_display %></th>
-    </tr>
-    <tr>
-      <th>支払方法</th>
-      <th><%= @order.pay_method_i18n %></th>
-    </tr>
-    <tr>
-      <th></th>
-      <th></th>
-    </tr>
-  </tbody>
-</table>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>商品名</th>
-      <th>単価(税込)</th>
-      <th>数量</th>
-      <th>小計</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @order_details.each do |order_details| %>
-    <tr>
-      <th><%= order_details.item.name %></th>
-      <th><%= number_with_delimiter(order_details.item.with_tax_price, delimiter: ',') %></td>
-      <td><%= order_details.amount %></td>
-      <th><%= number_with_delimiter(order_details.subtotal, delimiter: ',') %></th>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<table class="table">
-   <tbody>
-    <tr>
-      <th>商品合計</th>
-      <th><%= number_with_delimiter(@order.total, delimiter: ',') %></th>
-    </tr>
-    <tr>
-      <th>送料</th>
-      <th><%= @order.postage %></th>
-    </tr>
-    <tr>
-      <th>請求金額合計</th>
-      <th><%= number_with_delimiter(@order.pay_money, delimiter: ',') %></th>
-    </tr>
-  </tbody>
-</table>
+<div class="container p-4">
+  <h3 class="font-weight-bold my-3 ml-5">注文履歴詳細</h3>
+  <div class="row m-auto p-auto">
+    <table class="table table-borderless">
+      <tbody>
+        <tr>
+          <th>購入者</th>
+          <th><%= link_to @order.address_name, admin_customer_path(@order.customer_id) %></th>
+        </tr>
+        <tr>
+          <th>注文日</th>
+          <th><%= @order.created_at.strftime('%Y/%m/%d') %></th>
+        </tr>
+        <tr>
+          <th>配送先</th>
+          <th><%= @order.address_display %></th>
+        </tr>
+        <tr>
+          <th>支払方法</th>
+          <th><%= @order.pay_method_i18n %></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row m-auto p-auto">
+    <div class="col-6 m-auto p-auto">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>商品名</th>
+            <th>単価(税込)</th>
+            <th>数量</th>
+            <th>小計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @order_details.each do |order_details| %>
+          <tr>
+            <td><%= order_details.item.name %></td>
+            <td><%= number_with_delimiter(order_details.item.with_tax_price, delimiter: ',') %></td>
+            <td><%= order_details.amount %></td>
+            <td><%= number_with_delimiter(order_details.subtotal, delimiter: ',') %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-3 m-auto p-auto"></div>
+    <div class="col-3 m-auto p-auto">
+      <div class="row text-bottom">
+        <table class="table table-borderless">
+          <tbody>
+            <tr>
+              <th>商品合計</th>
+              <td><%= number_with_delimiter(@order.total, delimiter: ',') %>円</td>
+            </tr>
+            <tr>
+              <th>送料</th>
+              <td><%= @order.postage %>円</td>
+            </tr>
+            <tr>
+              <th>請求金額合計</th>
+              <th><%= number_with_delimiter(@order.pay_money, delimiter: ',') %>円</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
