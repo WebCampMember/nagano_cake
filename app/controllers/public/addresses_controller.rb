@@ -8,8 +8,10 @@ class Public::AddressesController < ApplicationController
     address = Address.new(address_params)
     address.customer_id = current_customer.id
     if address.save
+      flash[:notice] = "登録に成功しました。"
       redirect_to addresses_path
     else
+      flash[:alert] = "登録に失敗しました。"
       redirect_to customers_my_page_path
     end
   end
@@ -21,9 +23,10 @@ class Public::AddressesController < ApplicationController
   def update
     @address = Address.find(params[:id])
     if @address.update(address_params)
-      # flash[:success] = "You have updated book successfully."
+      flash[:notice] = "更新に成功しました。"
       redirect_to addresses_path
     else
+      flash[:alert] = "更新に失敗しました。"
       render :edit
     end
   end

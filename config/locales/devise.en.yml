@@ -63,3 +63,11 @@ en:
       not_saved:
         one: "1 error prohibited this %{resource} from being saved:"
         other: "%{count} errors prohibited this %{resource} from being saved:"
+
+ja:
+  devise:
+    sessions:
+      signed_in: 'ログインに成功しました。'
+      signed_out: 'ログアウトに成功しました。'
+      already_signed_out: 'ログアウトに成功しました。'
+

@@ -38,21 +38,25 @@ class Public::OrdersController < ApplicationController
     # 注文(Order)モデルに注文を保存
     order = Order.new(order_params)
     order.customer_id = current_customer.id
-    order.save
+    if order.save
     # 注文詳細(OrderDetail)モデルにカート内商品の情報をもとに保存
-    @cart_items = current_customer.cart_items
-    @cart_items.each do |cart_item|
-      order_detail = OrderDetail.new
-      order_detail.order_id = order.id
-      order_detail.item_id = cart_item.item_id
-      order_detail.price = cart_item.item.with_tax_price
-      order_detail.amount = cart_item.amount
-      order_detail.save
-    end
+      @cart_items = current_customer.cart_items
+      @cart_items.each do |cart_item|
+        order_detail = OrderDetail.new
+        order_detail.order_id = order.id
+        order_detail.item_id = cart_item.item_id
+        order_detail.price = cart_item.item.with_tax_price
+        order_detail.amount = cart_item.amount
+        order_detail.save
+      end
     # カート内商品を全て削除
-    current_customer.cart_items.destroy_all
+      current_customer.cart_items.destroy_all
     # 注文完了画面に遷移
-    redirect_to thanx_orders_path
+      redirect_to thanx_orders_path
+    else
+      flash[:alert] = "注文失敗しました。"
+      redirect_to cart_items_path
+    end
   end
 
   def thanx
